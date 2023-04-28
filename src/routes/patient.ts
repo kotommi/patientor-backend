@@ -14,9 +14,12 @@ patientRouter.post("/", (req, res) => {
         const np = toNewPatient(req.body);
         patientService.addPatient(np);
         res.status(200).json(np);
-    } catch (error) {
-        console.log(error);
-        res.status(400).send(error);
+    } catch (error: unknown) {
+        let emsg = "Something went wrong: ";
+        if (error instanceof Error) {
+            emsg += "Error: " + error.message;
+        }
+        res.status(400).send(emsg);
     }
 });
 

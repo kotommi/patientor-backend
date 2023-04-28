@@ -4,6 +4,7 @@ Content-Type: application/json
 {
     "name": "Holly McClane",
     "ssn": "123abc",
-    "dateOfBirth": "1971-01-04",
-    "occupation": "Housewife"
+    "dateOfBirth": "1971-01-041",
+    "occupation": "Housewife",
+    "gender": "female"
 }
