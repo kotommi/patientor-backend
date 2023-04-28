@@ -11,4 +11,5 @@ diagRouter.post("/", (_req, res) => {
     res.send("saved");
 });
 
+
 export default diagRouter;
