@@ -1,11 +1,11 @@
 import data from "../../data/diagnoses";
-import { diagnosisEntry } from "../types";
+import { Entry } from "../types";
 
-const getEntries = (): diagnosisEntry[] => {
+const getEntries = (): Entry[] => {
     return data;
 };
 
-const addDiagnosis = (diag: diagnosisEntry) => {
+const addDiagnosis = (diag: Entry) => {
     console.log(diag);
     return null;
 };
