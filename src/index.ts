@@ -15,6 +15,10 @@ app.get('/ping', (_req, res) => {
   res.send('pong');
 });
 
+app.get("/api/ping", (_req, res) => {
+  res.send("pong");
+});
+
 app.use("/api/diagnosis", diagRouter);
 app.use("/api/patients", patientRouter);
 
