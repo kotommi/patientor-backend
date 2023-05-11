@@ -30,7 +30,7 @@ export const toNewEntry = (object: unknown): newEntry => {
         throw new Error("Incorrect or missing data object: " + object);
     }
     if (!("description" in object) || !("date" in object) || !("specialist" in object) || !("type" in object)) {
-        throw new Error("Missing data field in object: " + object.toString());
+        throw new Error("Missing data field in object: " + Object.keys(object));
     }
 
     const type = parseType(object.type);
@@ -101,7 +101,7 @@ const parseHCR = (hcr: unknown): HealthCheckRating => {
 };
 
 const isHCR = (hcr: unknown): hcr is HealthCheckRating => {
-    if (!hcr || typeof hcr !== "number" ) return false;
+    if (!hcr || typeof hcr !== "number")  return false;
     return Object.values(HealthCheckRating).includes(hcr);
 };
 
