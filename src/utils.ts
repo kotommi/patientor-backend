@@ -40,7 +40,7 @@ export const toNewEntry = (object: unknown): newEntry => {
         specialist: parseSpecialist(object.specialist)
     };
     if ("diagnosisCodes" in object) {
-        base.diagnosisCodes = parseDiagnosisCodes(object.diagnosisCodes);
+        base.diagnosisCodes = parseDiagnosisCodes(object);
     }
     switch (type) {
         case ("Hospital"):
@@ -200,11 +200,12 @@ const isDate = (d: string): boolean => {
     return Boolean(Date.parse(d));
 };
 
-export const parseDiagnosisCodes = (object: unknown): Array<Diagnosis['code']> =>  {
+const parseDiagnosisCodes = (object: unknown): Array<Diagnosis['code']> =>  {
     if (!object || typeof object !== 'object' || !('diagnosisCodes' in object)) {
-      // we will just trust the data to be in correct form
-      return [] as Array<Diagnosis['code']>;
+        console.log("asd");
+        // we will just trust the data to be in correct form
+        return [] as Array<Diagnosis['code']>;
     }
-  
+    console.log(object.diagnosisCodes);
     return object.diagnosisCodes as Array<Diagnosis['code']>;
   };
