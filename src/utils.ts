@@ -202,10 +202,8 @@ const isDate = (d: string): boolean => {
 
 const parseDiagnosisCodes = (object: unknown): Array<Diagnosis['code']> =>  {
     if (!object || typeof object !== 'object' || !('diagnosisCodes' in object)) {
-        console.log("asd");
         // we will just trust the data to be in correct form
         return [] as Array<Diagnosis['code']>;
     }
-    console.log(object.diagnosisCodes);
     return object.diagnosisCodes as Array<Diagnosis['code']>;
   };
