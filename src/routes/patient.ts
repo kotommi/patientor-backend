@@ -40,6 +40,7 @@ patientRouter.post("/:id/entries", (req, res) => {
         const id = req.params.id;
         const entry: newEntry = toNewEntry(req.body);
         patientService.addEntry(id, entry);
+        res.status(200).json(entry);
     } catch (error: unknown) {
         let emsg = "Something went wrong: ";
         if (error instanceof Error) {

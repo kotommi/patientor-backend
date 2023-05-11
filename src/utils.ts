@@ -29,8 +29,8 @@ export const toNewEntry = (object: unknown): newEntry => {
     if (!object || typeof object !== "object") {
         throw new Error("Incorrect or missing data object: " + object);
     }
-    if (!("id" in object) || !("description" in object) || !("date" in object) || !("specialist" in object) || !("type" in object)) {
-        throw new Error("Missing data field in object: " + object);
+    if (!("description" in object) || !("date" in object) || !("specialist" in object) || !("type" in object)) {
+        throw new Error("Missing data field in object: " + object.toString());
     }
 
     const type = parseType(object.type);
