@@ -100,7 +100,7 @@ const parseEmployer = (em: unknown): string => {
 };
 
 const parseHCR = (hcr: unknown): HealthCheckRating => {
-    if (!isHCR(hcr)) throw new Error("Incorrect or missing healthcheckrating: ", hcr);
+    if (!isHCR(hcr)) throw new Error("Incorrect or missing healthcheckrating: " + hcr);
     return hcr;
 };
 

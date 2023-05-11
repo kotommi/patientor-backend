@@ -1,7 +1,7 @@
 import express from "express";
 import patientService from "../services/patientService";
-import { toNewPatient } from "../utils";
-import { Diagnosis } from "../types";
+import { toNewPatient, toNewEntry } from "../utils";
+import { newEntry } from "../types";
 
 
 const patientRouter = express.Router();
@@ -38,7 +38,7 @@ patientRouter.post("/", (req, res) => {
 patientRouter.post("/:id/entries", (req, res) => {
     try {
         const id = req.params.id;
-        const entry = toNewEntry(req.body);
+        const entry: newEntry = toNewEntry(req.body);
         patientService.addEntry(id, entry);
     } catch (error: unknown) {
         let emsg = "Something went wrong: ";
