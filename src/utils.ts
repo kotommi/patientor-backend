@@ -1,4 +1,4 @@
-import { Entry, Diagnosis, Gender, newEntry, newPatient, discharge, HealthCheckRating, sickLeave } from "./types";
+import { Entry, Diagnosis, Gender, newEntry, newPatient, discharge, HealthCheckRating, sickLeave, newBaseEntry } from "./types";
 
 export const toNewPatient = (object: unknown): newPatient => {
     if (!object || typeof object !== "object") {
@@ -29,52 +29,48 @@ export const toNewEntry = (object: unknown): newEntry => {
     if (!object || typeof object !== "object") {
         throw new Error("Incorrect or missing data object: " + object);
     }
-    if (!("id" in object) || !("description" in object) || !("date" in object) || !("specialist" in object) || !("diagnosisCodes" in object) || !("type" in object)) {
+    if (!("id" in object) || !("description" in object) || !("date" in object) || !("specialist" in object) || !("type" in object)) {
         throw new Error("Missing data field in object: " + object);
     }
 
     const type = parseType(object.type);
+    const base: newBaseEntry =  {
+        description: parseDescription(object.description),
+        date: parseDate(object.date),
+        specialist: parseSpecialist(object.specialist)
+    };
+    if ("diagnosisCodes" in object) {
+        base.diagnosisCodes = parseDiagnosisCodes(object.diagnosisCodes);
+    }
     switch (type) {
         case ("Hospital"):
             if (!("discharge" in object)) throw new Error("Missing discharge field in object of type " + type);
             const hospitalEntry: newEntry = {
                 type: type,
-                description: parseDescription(object.description),
-                date: parseDate(object.date),
-                specialist: parseSpecialist(object.specialist),
-                diagnosisCodes: parseDiagnosisCodes(object.diagnosisCodes),
-                discharge: parseDischarge(object.discharge)
+                discharge: parseDischarge(object.discharge),
+                ...base
             };
             return hospitalEntry;
         case ("HealthCheck"):
             if (!("healthCheckRating" in object)) throw new Error("Missing HealthCheckRating field in object: " + object);
             const checkEntry: newEntry = {
                 type: type,
-                description: parseDescription(object.description),
-                date: parseDate(object.date),
-                specialist: parseSpecialist(object.specialist),
-                diagnosisCodes: parseDiagnosisCodes(object.diagnosisCodes),
-                healthCheckRating: parseHCR(object.healthCheckRating)
+                healthCheckRating: parseHCR(object.healthCheckRating),
+                ...base
             };
             return checkEntry;
         case ("OccupationalHealthcare"):
             if (!("employerName" in object)) throw new Error("Missing employername field in object of type " + type);
-            const base: newEntry = {
+            const occEntry: newEntry = {
                 type: type,
-                description: parseDescription(object.description),
-                date: parseDate(object.date),
-                specialist: parseSpecialist(object.specialist),
-                diagnosisCodes: parseDiagnosisCodes(object.diagnosisCodes),
-                employerName: parseEmployer(object.employerName)
+                employerName: parseEmployer(object.employerName),
+                ...base
             };
             if ("sickLeave" in object) {
-                const occEntry: newEntry = {
-                    sickLeave: parseSickLeave(object.sickLeave),
-                    ... base
-                };
-                return occEntry;
+                occEntry.sickLeave = parseSickLeave(object.sickLeave);
             }
-            return base;
+            return occEntry;
+            
     }
 };
 
